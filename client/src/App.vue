@@ -17,8 +17,7 @@ export default {
 
 <style>
 #app {
-  height: 100vw;
-  height: 100vh;
+  min-height: 100vh;
   background: linear-gradient(to top, #003366 0%, #333399 100%);
 }
 /* #app {

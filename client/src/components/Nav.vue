@@ -36,12 +36,21 @@
               >
               <ul class="dropdown-menu p-2" aria-labelledby="navbarDropdown">
                 <li>
-                  <input type="text" placeholder="Pic url" class="form-control" />
+                  <input type="text" v-model="url" placeholder="Pic url" class="form-control" />
                 </li>
                 <li>
-                  <input type="text" placeholder="Description" class="form-control" />
+                  <input
+                    type="text"
+                    v-model="description"
+                    placeholder="Description"
+                    class="form-control"
+                  />
                 </li>
-                <li><button class="btn btn-outline-primary mt-2 w-100">Send</button></li>
+                <li>
+                  <button @click.prevent="sendPicture" class="btn btn-outline-primary mt-2 w-100">
+                    Send
+                  </button>
+                </li>
               </ul>
             </li>
           </ul>
@@ -58,7 +67,26 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   name: 'Nav',
+  data() {
+    return {
+      url: '',
+      description: '',
+    };
+  },
+  methods: {
+    async sendPicture() {
+      try {
+        const { url, description } = this;
+        await axios.post('/pictures', { url, description });
+        this.$router.go('/');
+      } catch (e) {
+        console.log(e);
+      }
+    },
+  },
 };
 </script>
