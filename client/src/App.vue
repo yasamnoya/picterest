@@ -1,15 +1,27 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+    <Nav />
+    <router-view class="main" />
   </div>
 </template>
 
+<script>
+import Nav from '@/components/Nav.vue';
+
+export default {
+  components: {
+    Nav,
+  },
+};
+</script>
+
 <style>
 #app {
+  height: 100vw;
+  height: 100vh;
+  background: linear-gradient(to top, #003366 0%, #333399 100%);
+}
+/* #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -28,5 +40,5 @@
 
 #nav a.router-link-exact-active {
   color: #42b983;
-}
+} */
 </style>
