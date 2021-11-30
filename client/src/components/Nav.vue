@@ -56,7 +56,7 @@
           </ul>
 
           <form class="d-flex">
-            <button class="btn btn-outline-dark">
+            <button @click.prevent="login" class="btn btn-outline-dark">
               <img src="@/assets/GitHub-Mark-32px.png" alt="GitHub Logo" class="me-2" />Login
             </button>
           </form>
@@ -86,6 +86,11 @@ export default {
       } catch (e) {
         console.log(e);
       }
+    },
+    login() {
+      window.location.assign(
+        `https://github.com/login/oauth/authorize?client_id=${process.env.VUE_APP_GITHUB_CLIENT_ID}`,
+      );
     },
   },
 };

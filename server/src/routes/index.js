@@ -5,5 +5,6 @@ router.get('/', (req, res) => {
 });
 
 router.use('/pictures', require('./pictures.route'));
+router.use('/users/', require('./users.route'));
 
 module.exports = router;
