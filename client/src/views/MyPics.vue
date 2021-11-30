@@ -1,6 +1,11 @@
 <template>
   <div class="w-75 m-auto mt-5">
-    <Cards :user="user" :pictures="pictures" />
+    <Cards
+      @likePicture="likePicture"
+      @unlikePicture="unlikePicture"
+      :user="user"
+      :pictures="pictures"
+    />
   </div>
 </template>
 
@@ -23,10 +28,25 @@ export default {
   async mounted() {
     try {
       const res = await axios.get(`/users/${this.user.username}/pictures`);
-      this.pictures = res.data;
+      this.pictures = res.data.map((pic) => {
+        const liked = pic.Likes.some((like) => like.userId === this.user.id);
+        return { ...pic, liked, likeCount: pic.Likes.length };
+      });
     } catch (e) {
       console.log(e);
     }
+  },
+  methods: {
+    likePicture(pictureId) {
+      const picture = this.pictures.filter((pic) => pic.id === pictureId)[0];
+      picture.liked = true;
+      picture.likeCount += 1;
+    },
+    unlikePicture(pictureId) {
+      const picture = this.pictures.filter((pic) => pic.id === pictureId)[0];
+      picture.liked = false;
+      picture.likeCount -= 1;
+    },
   },
 };
 </script>

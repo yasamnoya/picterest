@@ -21,9 +21,13 @@
           >
             <font-awesome-icon :icon="['fas', 'trash-alt']" />
           </button>
-          <button class="btn btn-outline-primary w-25">
+          <button
+            @click.prevent="picture.liked ? unlikePicture(picture.id) : likePicture(picture.id)"
+            class="btn w-25"
+            :class="picture.liked ? 'btn-primary' : 'btn-outline-primary'"
+          >
             <font-awesome-icon :icon="['fas', 'thumbs-up']" />
-            0
+            {{ picture.likeCount }}
           </button>
         </div>
       </div>
@@ -45,6 +49,22 @@ export default {
       try {
         await axios.delete(`/pictures/${pictureId}`);
         this.$router.go();
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    async likePicture(pictureId) {
+      try {
+        await axios.patch(`/pictures/${pictureId}/like`);
+        this.$emit('likePicture', pictureId);
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    async unlikePicture(pictureId) {
+      try {
+        await axios.patch(`/pictures/${pictureId}/unlike`);
+        this.$emit('unlikePicture', pictureId);
       } catch (e) {
         console.log(e);
       }
