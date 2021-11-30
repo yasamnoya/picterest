@@ -29,7 +29,7 @@ export default {
     try {
       const res = await axios.get('/pictures');
       this.pictures = res.data.map((pic) => {
-        const liked = pic.Likes.some((like) => like.userId === this.user.id);
+        const liked = this.user ? pic.Likes.some((like) => like.userId === this.user.id) : false;
         return { ...pic, liked, likeCount: pic.Likes.length };
       });
     } catch (e) {

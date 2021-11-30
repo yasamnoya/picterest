@@ -15,7 +15,7 @@
             <img :src="picture.User.avatarUrl" alt="avatar" class="w-100 h-100" />
           </router-link>
           <button
-            v-if="user.id == picture.userId"
+            v-if="user && user.id == picture.userId"
             @click.prevent="deletePicture(picture.id)"
             class="btn btn-outline-danger w-25"
           >
@@ -24,7 +24,9 @@
           <button
             @click.prevent="picture.liked ? unlikePicture(picture.id) : likePicture(picture.id)"
             class="btn w-25"
-            :class="picture.liked ? 'btn-primary' : 'btn-outline-primary'"
+            :class="`
+              ${picture.liked ? 'btn-primary' : 'btn-outline-primary'}  ${user ? '' : 'disabled'}
+            `"
           >
             <font-awesome-icon :icon="['fas', 'thumbs-up']" />
             {{ picture.likeCount }}
