@@ -21,10 +21,10 @@
             <li class="nav-item">
               <router-link class="nav-link" to="/">All Pics</router-link>
             </li>
-            <li class="nav-item">
+            <li v-if="user" class="nav-item">
               <router-link class="nav-link" to="/my">My Pics</router-link>
             </li>
-            <li class="nav-item dropdown">
+            <li v-if="user" class="nav-item dropdown">
               <a
                 class="nav-link dropdown-toggle"
                 href="#"
@@ -56,9 +56,10 @@
           </ul>
 
           <form class="d-flex">
-            <button @click.prevent="login" class="btn btn-outline-dark">
+            <button v-if="!user" @click.prevent="login" class="btn btn-outline-dark">
               <img src="@/assets/GitHub-Mark-32px.png" alt="GitHub Logo" class="me-2" />Login
             </button>
+            <button v-if="user" @click.prevent="logout" class="btn btn-outline-dark">Logout</button>
           </form>
         </div>
       </div>
@@ -77,6 +78,9 @@ export default {
       description: '',
     };
   },
+  props: {
+    user: null,
+  },
   methods: {
     async sendPicture() {
       try {
@@ -91,6 +95,14 @@ export default {
       window.location.assign(
         `https://github.com/login/oauth/authorize?client_id=${process.env.VUE_APP_GITHUB_CLIENT_ID}`,
       );
+    },
+    async logout() {
+      try {
+        await axios.get('/users/logout');
+        this.$router.go('/');
+      } catch (e) {
+        console.log(e);
+      }
     },
   },
 };

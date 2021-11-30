@@ -13,6 +13,7 @@ library.add(faTrashAlt);
 library.add(faThumbsUp);
 
 axios.defaults.baseURL = process.env.VUE_APP_BACKEND_URL;
+axios.defaults.withCredentials = true;
 
 Vue.config.productionTip = false;
 Vue.use(VueManonry);

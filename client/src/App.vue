@@ -1,16 +1,31 @@
 <template>
   <div id="app">
-    <Nav />
-    <router-view class="main" />
+    <Nav :user="user" />
+    <router-view :user="user" class="main" />
   </div>
 </template>
 
 <script>
+import axios from 'axios';
 import Nav from '@/components/Nav.vue';
 
 export default {
   components: {
     Nav,
+  },
+  data() {
+    return {
+      user: null,
+    };
+  },
+  async created() {
+    try {
+      const res = await axios.get('/users/me');
+      this.user = res.data;
+      console.log(this.user);
+    } catch (e) {
+      console.log(e);
+    }
   },
 };
 </script>
