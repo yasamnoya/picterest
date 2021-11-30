@@ -4,7 +4,7 @@ const passport = require('../auth/passport');
 router.get('/github', passport.authenticate('github'));
 
 router.get('/github/callback', passport.authenticate('github'), (req, res) => {
-  res.send('logged in!');
+  res.redirect(`${process.env.FRONTEND_URL}/picterest`);
 });
 
 module.exports = router;
