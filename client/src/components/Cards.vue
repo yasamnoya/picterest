@@ -12,7 +12,11 @@
         </div>
         <div class="px-1 py-2 d-flex justify-content-between">
           <img src="@/assets/GitHub-Mark-32px.png" alt="avatar" class="avatar" />
-          <button @click.prevent="deletePicture(picture.id)" class="btn btn-outline-danger w-25">
+          <button
+            v-if="user.id == picture.userId"
+            @click.prevent="deletePicture(picture.id)"
+            class="btn btn-outline-danger w-25"
+          >
             <font-awesome-icon :icon="['fas', 'trash-alt']" />
           </button>
           <button class="btn btn-outline-primary w-25">
@@ -32,6 +36,7 @@ export default {
   name: 'Cards',
   props: {
     pictures: Array,
+    user: null,
   },
   methods: {
     async deletePicture(pictureId) {

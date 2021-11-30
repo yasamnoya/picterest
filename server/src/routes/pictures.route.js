@@ -1,10 +1,11 @@
 const router = require('express').Router();
 const { Picture } = require('../models');
+const { hasLoggedIn } = require('../middlewares/auth');
 
-router.post('/', async (req, res) => {
+router.post('/', hasLoggedIn, async (req, res) => {
   try {
     const { url, description } = req.body;
-    const picture = await Picture.create({ url, description });
+    const picture = await Picture.create({ url, description, userId: req.user.id });
     res.status(201).send(picture);
   } catch (e) {
     console.error(e);
@@ -33,7 +34,7 @@ router.get('/:pictureId', async (req, res) => {
   }
 });
 
-router.patch('/:pictureId', async (req, res) => {
+router.patch('/:pictureId', hasLoggedIn, async (req, res) => {
   try {
     const result = await Picture.update(req.body, {
       where: { id: req.params.pictureId },
@@ -51,10 +52,13 @@ router.patch('/:pictureId', async (req, res) => {
   }
 });
 
-router.delete('/:pictureId', async (req, res) => {
+router.delete('/:pictureId', hasLoggedIn, async (req, res) => {
   try {
     const result = await Picture.destroy({
-      where: { id: req.params.pictureId },
+      where: {
+        id: req.params.pictureId,
+        userId: req.user.id,
+      },
     });
     if (!result) return res.sendStatus(404);
     res.sendStatus(204);

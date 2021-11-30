@@ -1,6 +1,6 @@
 <template>
   <div class="w-75 m-auto mt-5">
-    <Cards :pictures="pictures" />
+    <Cards :user="user" :pictures="pictures" />
   </div>
 </template>
 
@@ -9,6 +9,9 @@ import axios from 'axios';
 import Cards from '../components/Cards.vue';
 
 export default {
+  props: {
+    user: null,
+  },
   data() {
     return {
       pictures: [],
