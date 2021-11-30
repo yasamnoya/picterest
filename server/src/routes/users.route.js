@@ -21,7 +21,7 @@ router.get('/logout', (req, res) => {
 router.get('/:username/pictures', async (req, res) => {
   try {
     const user = await User.findOne({ where: { username: req.params.username } });
-    const pictures = await user.getPictures({ include: ['User', 'Likes'] });
+    const pictures = await user.getPictures({ include: ['User', 'Likes'], order: [['createdAt', 'DESC']] });
     res.send(pictures);
   } catch (e) {
     console.error(e);
