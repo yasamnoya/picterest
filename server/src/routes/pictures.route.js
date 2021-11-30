@@ -15,7 +15,7 @@ router.post('/', hasLoggedIn, async (req, res) => {
 
 router.get('/', async (req, res) => {
   try {
-    const pictures = await Picture.findAll();
+    const pictures = await Picture.findAll({ include: 'User' });
     res.send(pictures);
   } catch (e) {
     console.error(e);

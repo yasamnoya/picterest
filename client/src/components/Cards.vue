@@ -11,7 +11,9 @@
           <h5>{{ picture.description }}</h5>
         </div>
         <div class="px-1 py-2 d-flex justify-content-between">
-          <img src="@/assets/GitHub-Mark-32px.png" alt="avatar" class="avatar" />
+          <router-link :to="`/${picture.User.username}`" class="w-25 h-25">
+            <img :src="picture.User.avatarUrl" alt="avatar" class="w-100 h-100" />
+          </router-link>
           <button
             v-if="user.id == picture.userId"
             @click.prevent="deletePicture(picture.id)"
